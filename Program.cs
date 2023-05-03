@@ -11,6 +11,7 @@ namespace SampleSynthesis
         static void PrintHelp() { 
             Console.WriteLine("sapicli guide:");
             Console.WriteLine("\t--help, -h to display this message\n");
+            Console.WriteLine("\t--ssml to specify the speech text uses SSML (off by default).\n");
             Console.WriteLine("\t-l[=<culture>] to list all available voices culture. eg '-l=en_US' to display american english voices or '-l' to display all. culture is type of https://learn.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo.-ctor?view=netframework-4.8.1#system-globalization-cultureinfo-ctor(system-string) \n");
             Console.WriteLine("\t-v <voiceName> to select a voice.  https://learn.microsoft.com/en-us/dotnet/api/system.speech.synthesis.speechsynthesizer.selectvoice \n");
             Console.WriteLine("\t-r <rate> to choose speech rate.  (-10 <= integer <= 10).  https://learn.microsoft.com/en-us/dotnet/api/system.speech.synthesis.speechsynthesizer.rate \n");
@@ -18,11 +19,11 @@ namespace SampleSynthesis
             Console.WriteLine("\t-w <wavOutputPath> to save speech to wav. https://learn.microsoft.com/en-us/dotnet/api/system.speech.synthesis.speechsynthesizer.setoutputtowavefile \n");
             Console.WriteLine("\t-t <text> to set the speech text.\n"); 
             Console.WriteLine("\t-f <pathToInputFile> to set the speech text to file content.\n");
-            Console.WriteLine("\t--ssml to specify the speech text uses SSML (off by default).\n");
             System.Environment.Exit(1);
         }
         static void PrintAvailVoices(SpeechSynthesizer synth)
         {
+            //src https://learn.microsoft.com/en-us/dotnet/api/system.speech.synthesis.speechsynthesizer.getinstalledvoices?view=netframework-4.8.1
             foreach (InstalledVoice voice in synth.GetInstalledVoices())
             {
                 VoiceInfo info = voice.VoiceInfo;
@@ -62,6 +63,7 @@ namespace SampleSynthesis
         }
         static void PrintAvailVoices(SpeechSynthesizer synth,String culture)
         {
+            //src https://learn.microsoft.com/en-us/dotnet/api/system.speech.synthesis.speechsynthesizer.getinstalledvoices?view=netframework-4.8.1
             foreach (InstalledVoice voice in synth.GetInstalledVoices(new CultureInfo(culture)))
             {
                 VoiceInfo info = voice.VoiceInfo;
