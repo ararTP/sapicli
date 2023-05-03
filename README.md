@@ -21,6 +21,13 @@ FOSS alternative to balabolka.
         -t <text> to set the speech text.
 
         -f <pathToInputFile> to set the speech text to file content.
+# Examples:
+
+```bash 
+   $ sapicli -t "hello what's up" -v "Microsoft Zira Desktop"
+   $ sapicli -l=en_US
+   $ sapicli --ssml -f text.ssml -a 20 -r 5 -w output.wav
+```
 
 # building instructions:
   1. Create a new VS .NET C# CLI project.
