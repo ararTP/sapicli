@@ -4,10 +4,10 @@ FOSS alternative to balabolka.
 
 # sapicli guide:
 
-        --ssml to specify the speech text uses SSML (off by default).
-        
         --help, -h to display this message
 
+        --ssml to specify the speech text uses SSML (off by default).
+        
         -l[=<culture>] to list all available voices culture. eg '-l=en_US' to display american english voices or '-l' to display all. culture is type of 'https://learn.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo.-ctor?view=netframework-4.8.1#system-globalization-cultureinfo-ctor(system-string)'
 
         -v <voiceName> to select a voice.  https://learn.microsoft.com/en-us/dotnet/api/system.speech.synthesis.speechsynthesizer.selectvoice
