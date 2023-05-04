@@ -11,7 +11,9 @@ FOSS alternative to balabolka.
         -l[=<culture>] to list all available voices culture. eg '-l=en_US' to display american english voices or '-l' to display all. culture is type of 'https://learn.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo.-ctor?view=netframework-4.8.1#system-globalization-cultureinfo-ctor(system-string)'
 
         -v <voiceName> to select a voice.  https://learn.microsoft.com/en-us/dotnet/api/system.speech.synthesis.speechsynthesizer.selectvoice
-
+        
+        -i <voiceIndex> select voice by index. (see '-l' output for indexes).
+        
         -r <rate> to choose speech rate.  (-10 <= integer <= 10).  https://learn.microsoft.com/en-us/dotnet/api/system.speech.synthesis.speechsynthesizer.rate
 
         -a <volume> to change speech volume (0 <= integer <= 100). https://learn.microsoft.com/en-us/dotnet/api/system.speech.synthesis.speechsynthesizer.volume
