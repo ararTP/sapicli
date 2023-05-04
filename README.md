@@ -4,7 +4,7 @@ FOSS alternative to balabolka.
 
 # sapicli guide:
 
-        --help, -h to display this message
+        --help, -h to display help message
 
         --ssml to specify the speech text uses SSML (off by default).
         
@@ -29,6 +29,7 @@ FOSS alternative to balabolka.
    $ sapicli -t "hello what's up" -v "Microsoft Zira Desktop"
    $ sapicli -l=en_US
    $ sapicli --ssml -f text.ssml -a 20 -r 5 -w output.wav
+   $ sapicli -f text.txt -i -1 -w output.wav
 ```
 
 # building instructions:
