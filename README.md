@@ -1,6 +1,6 @@
 # sapicli
 Simple Microsoft SAPI CLI. 
-FOSS alternative to balabolka.
+FOSS alternative to balabolka CLI (balcon).
 
 # sapicli guide:
 
