@@ -14,6 +14,7 @@ namespace SampleSynthesis
             Console.WriteLine("\t--ssml to specify the speech text uses SSML (off by default).\n");
             Console.WriteLine("\t-l[=<culture>] to list all available voices culture. eg '-l=en_US' to display american english voices or '-l' to display all. culture is type of https://learn.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo.-ctor?view=netframework-4.8.1#system-globalization-cultureinfo-ctor(system-string) \n");
             Console.WriteLine("\t-v <voiceName> to select a voice.  https://learn.microsoft.com/en-us/dotnet/api/system.speech.synthesis.speechsynthesizer.selectvoice \n");
+            Console.WriteLine("\t-i <voiceIndex> select voice by index. (see '-l' output for indexes).\n");
             Console.WriteLine("\t-r <rate> to choose speech rate.  (-10 <= integer <= 10).  https://learn.microsoft.com/en-us/dotnet/api/system.speech.synthesis.speechsynthesizer.rate \n");
             Console.WriteLine("\t-a <volume> to change speech volume (0 <= integer <= 100). https://learn.microsoft.com/en-us/dotnet/api/system.speech.synthesis.speechsynthesizer.volume \n");
             Console.WriteLine("\t-w <wavOutputPath> to save speech to wav. https://learn.microsoft.com/en-us/dotnet/api/system.speech.synthesis.speechsynthesizer.setoutputtowavefile \n");
@@ -23,6 +24,8 @@ namespace SampleSynthesis
         }
         static void PrintAvailVoices(SpeechSynthesizer synth)
         {
+            Console.WriteLine();
+            int i = 0;
             //src https://learn.microsoft.com/en-us/dotnet/api/system.speech.synthesis.speechsynthesizer.getinstalledvoices?view=netframework-4.8.1
             foreach (InstalledVoice voice in synth.GetInstalledVoices())
             {
@@ -33,7 +36,7 @@ namespace SampleSynthesis
                     AudioFormats += String.Format("{0}\n",
                     fmt.EncodingFormat.ToString());
                 }
-
+                Console.WriteLine(" Index:         " + i);
                 Console.WriteLine(" Name:          " + info.Name);
                 Console.WriteLine(" Culture:       " + info.Culture);
                 Console.WriteLine(" Age:           " + info.Age);
@@ -58,11 +61,13 @@ namespace SampleSynthesis
 
                 Console.WriteLine(" Additional Info - " + AdditionalInfo);
                 Console.WriteLine();
+                i++;
             }
             System.Environment.Exit(1);
         }
         static void PrintAvailVoices(SpeechSynthesizer synth,String culture)
         {
+            Console.WriteLine();
             //src https://learn.microsoft.com/en-us/dotnet/api/system.speech.synthesis.speechsynthesizer.getinstalledvoices?view=netframework-4.8.1
             foreach (InstalledVoice voice in synth.GetInstalledVoices(new CultureInfo(culture)))
             {
@@ -73,7 +78,6 @@ namespace SampleSynthesis
                     AudioFormats += String.Format("{0}\n",
                     fmt.EncodingFormat.ToString());
                 }
-
                 Console.WriteLine(" Name:          " + info.Name);
                 Console.WriteLine(" Culture:       " + info.Culture);
                 Console.WriteLine(" Age:           " + info.Age);
@@ -201,6 +205,33 @@ namespace SampleSynthesis
                                     Err(e.Message);
                                 }
                                 break;
+                            case "i":
+                                if (i == args.Length - 1)
+                                {
+                                    Err(1);
+                                }
+                                int index=0;
+                                try
+                                {
+                                    index = Int32.Parse(args[i + 1]);
+                                    i++;
+                                }
+                                catch (FormatException)
+                                {
+                                    Err($"Err: Unable to parse '{args[i + 1]}' in -i");
+                                }
+                                try
+                                {
+                                    var voices = synth.GetInstalledVoices();
+                                    if (index < 0) index += voices.Count;
+                                    if (index > voices.Count || index < 0) Err("Voice index doesn't exist. run -l to see indexes");
+                                    synth.SelectVoice(voices[index].VoiceInfo.Name);
+                                }
+                                catch (Exception e)
+                                {
+                                    Err(e.Message);
+                                }
+                                break;
                             case "r":
                                 if (i == args.Length - 1)
                                 {
@@ -214,7 +245,7 @@ namespace SampleSynthesis
                                 }
                                 catch (FormatException)
                                 {
-                                    Err($"Err: Unable to parse '{args[i + 1]}'");
+                                    Err($"Err: Unable to parse '{args[i + 1]}' in -r");
                                 }
 
                                 try
@@ -239,7 +270,7 @@ namespace SampleSynthesis
                                 }
                                 catch (FormatException)
                                 {
-                                    Err($"Err: Unable to parse '{args[i + 1]}'");
+                                    Err($"Err: Unable to parse '{args[i + 1]}' in -a");
                                 }
 
                                 try
